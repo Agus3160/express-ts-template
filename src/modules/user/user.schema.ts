@@ -15,7 +15,15 @@ export const createUserSchema = z.object({
   role: z.enum(roles).default("user"),
 })
 
-export const readUserSchema = createUserSchema.merge(baseSchema).omit({password: true});
+export const userSchema = baseSchema.merge(z.object({
+  username: z.string(),
+  password: z.string(),
+  email: z.string(),
+  isEmailVerified: z.boolean(),
+  role: z.enum(roles),
+}))
+
+export const readUserSchema = userSchema.omit({password: true});
 
 export type CreateUserDto = z.infer<typeof createUserSchema>
 export type UserDto = z.infer<typeof readUserSchema>
