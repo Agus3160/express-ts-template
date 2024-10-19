@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { generateReponse } from "../util/util";
+import { generateReponse } from "../../util/util";
 import { CreateUserDto } from "./user.schema";
 import { userService } from "./user.service";
 
-class UserController {
+export const userController = {
+  
   async hardDelete(req: Request, res: Response, next: NextFunction) {
     const id = req.params.id as string;
     await userService.hardDelete(id);
@@ -13,7 +14,7 @@ class UserController {
       data: null,
       message: "User deleted successfully",
     });
-  }
+  },
 
   async softDelete(req: Request, res: Response, next: NextFunction) {
     const id = req.params.id as string;
@@ -24,7 +25,7 @@ class UserController {
       data: null,
       message: "User deleted successfully",
     });
-  }
+  },
 
   async findByEmail(req: Request, res: Response, next: NextFunction) {
     const email = req.params.email as string;
@@ -35,7 +36,7 @@ class UserController {
       message: "User found successfully",
       data: user,
     });
-  }
+  },
 
   async findById(req: Request, res: Response) {
     const id = req.params.id as string;
@@ -46,7 +47,7 @@ class UserController {
       message: "User found successfully",
       data: user,
     });
-  }
+  },
 
   async create(req: Request, res: Response, next: NextFunction) {
     const userData = req.body as CreateUserDto;
@@ -57,7 +58,7 @@ class UserController {
       message: "User created successfully",
       data: newUser,
     });
-  }
+  },
 
   async findByUsername(req: Request, res: Response, next: NextFunction) {
     const username = req.params.username as string;
@@ -68,7 +69,5 @@ class UserController {
       message: "User found successfully",
       data: user,
     });
-  }
-}
-
-export const userController = new UserController();
+  },
+};

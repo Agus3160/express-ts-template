@@ -1,6 +1,6 @@
-import { authMiddleware } from "../middleware/auth.middleware";
-import { RouteConfig } from "../util/definitions";
-import { emailValidationSchema, uuidValidationSchema } from "../util/validation/commons-validation";
+import { authMiddleware } from "../../middleware/auth.middleware";
+import { RouteConfig } from "../../util/definitions";
+import { emailValidationSchema, uuidValidationSchema } from "../../util/validation/commons-validation";
 import { userController } from "./user.controller";
 import { createUserSchema } from "./user.schema";
 

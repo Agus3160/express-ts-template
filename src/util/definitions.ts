@@ -21,3 +21,8 @@ export interface RouteConfig {
   prefix:string,
   paths:PathConfig[]
 }
+
+export interface AppConfigConstructor {
+  apiPrefix?: string;
+  globalErrorMiddleware?: RequestHandler;
+}

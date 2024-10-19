@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "../error/error.types";
-import { authService } from "../auth/auth.service";
+import { authService } from "../modules/auth/auth.service";
 import { Role } from "../db/entities/user.entity";
 
 export const authMiddleware = (role?: Role) => {

@@ -1,51 +1,30 @@
-import pino, { TransportTargetOptions } from "pino";
+import pino from "pino";
 import { env } from "./env";
-import fs from "fs";
-import path from "path";
 
-const {
-  logConfig: { level, logFile, saveLogs },
-} = env;
+const { nodeEnv } = env;
 
-const logDirectory = path.join(process.cwd(), "logs");
+const isProduction = nodeEnv === "production";
 
-//Verifiy if log directory exists and create it if not
-if (!fs.existsSync(logDirectory)) {
-  fs.mkdirSync(logDirectory);
-}
-
-const targets:TransportTargetOptions[] = [];
-
-const pinoPretty = {
-  target: "pino-pretty",
-  level: "debug",
-  options: {
-    colorize: true,
+const productionLogger = {
+  transport: {
+    target: "pino/file",
+    options: {
+      destination: 1,
+      sync: false,
+    },
   },
 };
 
-targets.push(pinoPretty);
-
-if(saveLogs) {
-  const pinoFile = {
-    target: "pino/file",
-    options: {
-      destination: path.join(logDirectory, logFile),
-    },
-  };
-  targets.push(pinoFile);
-}
-
-
-//Create logger
-const logger = pino({
-  level: level,
+const devLogger = {
   transport: {
-    targets: targets,
+    target: "pino-pretty",
     options: {
       colorize: true,
     },
   },
-});
+};
 
-export default logger;
+export const logger = pino({
+  level: isProduction ? "info" : "debug",
+  ...(isProduction ? productionLogger : devLogger),
+});

@@ -1,5 +1,5 @@
 import { createUserSchema } from "../user/user.schema";
-import { RouteConfig } from "../util/definitions";
+import { RouteConfig } from "../../util/definitions";
 import { authController } from "./auth.controller";
 import { loginSchema } from "./auth.schema";
 

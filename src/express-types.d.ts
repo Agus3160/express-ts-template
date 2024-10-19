@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { UserDto } from "./user/user.schema";
+import { UserDto } from "./modules/user/user.schema";
 
 declare global {
   declare namespace Express {

@@ -3,7 +3,7 @@ import { generateReponse } from "../util/util";
 import { AppError } from "./error.types";
 import { ApiResponse } from "../util/definitions";
 import { ZodError } from "zod";
-import logger from "../config/logger";
+import { logger } from "../config/logger";
 
 export const errorMiddleware = (
   err: any,
@@ -11,12 +11,14 @@ export const errorMiddleware = (
   res: Response,
   _next: NextFunction
 ) => {
-  
-  logger.error({
-    path: req.originalUrl,
-    error: err,
-    trace: err.stack,
-  }, `ERROR IN PATH: ${req.originalUrl}`);
+  logger.error(
+    {
+      path: req.originalUrl,
+      error: err,
+      trace: err.stack,
+    },
+    `ERROR IN PATH: ${req.originalUrl}`
+  );
 
   const responseData: ApiResponse = {
     status: 500,

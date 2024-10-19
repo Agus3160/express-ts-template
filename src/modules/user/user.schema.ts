@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { baseSchema } from "../util/base/schema";
-import { roles } from "../db/entities/user.entity";
+import { baseSchema } from "../../util/base/schema";
+import { roles } from "../../db/entities/user.entity";
 
 export const createUserSchema = z.object({
   username: z
