@@ -28,6 +28,12 @@ class UserService {
     return parseSchema(createUserSchema, user);
   }
 
+  async findByEmailWithPassword(email: string): Promise<User> {
+    const user = await this.userRepository.findOneBy({ email });
+    if (!user) throw new AppError(404, "User not found");
+    return user;
+  }
+
   async findByUsername(username: string): Promise<UserDto> {
     const user = await this.userRepository.findOneBy({ username });
     if (!user) throw new AppError(404, "User not found");

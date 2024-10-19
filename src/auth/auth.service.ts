@@ -4,22 +4,16 @@ import { userService } from "../user/user.service";
 import * as bcrypt from "bcrypt";
 import { AppError } from "../error/error.types";
 import { LoginDto } from "./auth.schema";
-import { Repository } from "typeorm";
-import { appDataSource } from "../db/data-source";
-import { User } from "../db/entities/user.entity";
 
 class AuthService {
   
-  private userRepository: Repository<User> = appDataSource.getRepository(User);
-
   async register(data: CreateUserDto): Promise<void> {
     const hashedPassword = await bcrypt.hash(data.password, 10);
     await userService.create({ ...data, password: hashedPassword });
   }
 
   async login(data: LoginDto): Promise<string> {
-    const user = await this.userRepository.findOneBy({email:data.email});
-    if (!user) throw new AppError(404, "User not found");
+    const user = await userService.findByEmailWithPassword(data.email);
     const isPasswordValid = await bcrypt.compare(data.password, user.password);
     if (!isPasswordValid) throw new AppError(401, "Invalid password");
     const token = jwtService.generateToken({
